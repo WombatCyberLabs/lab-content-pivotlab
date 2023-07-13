@@ -97,8 +97,8 @@ jobs:
       # This is horrible but I'm not paying for these CI minutes
       - name: Wait for service start
         run: |
-          sleep 15
+          sleep 30
       # This should give output details as to why it is failing when it fails
       - name: Check service statuses
         run: |
-          test $(curl http://localhost:8080/testResults?update=true | jq 'map(select(.success != true)) | length == 0') == "true"
+          ./service_test.sh
