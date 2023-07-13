@@ -52,6 +52,7 @@ services:
 
   gogs:
     image: gogs/gogs:0.11.43
+    restart: always
     ports:
       - "8091:3000"
     hostname: gogs
@@ -60,7 +61,23 @@ services:
         ipv4_address: 10.13.37.21
       ssrf_net:
         ipv4_address: 10.13.38.21
+    healthcheck:
+      test: "curl -f http://localhost:3000/install"
+      interval: 10s
+      timeout: 5s
+      retries: 5
 
+  gogsinit:
+    image: ghcr.io/wombatcyberlabs/lab-content-pivotlab-gogsinit:main
+    hostname: gogsinit
+    networks:
+      lab_net:
+        ipv4_address: 10.13.37.22
+    depends_on:
+      gogs:
+        condition: service_healthy
+
+    
 
 networks:
   lab_net:

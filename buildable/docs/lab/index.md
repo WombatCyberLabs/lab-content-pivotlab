@@ -1,3 +1,3 @@
 # Lab Instructions
 
-## [/lab/ssrf](SSRF Pivot Challenge)
+## [SSRF Pivot Challenge](/lab/ssrf.html)
