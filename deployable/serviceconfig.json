@@ -1,0 +1,21 @@
+{
+    "timeout": 4000,
+    "services":[
+        {
+            "name":"Lab Docs",
+            "hostname":"10.13.37.10",
+            "http": true,
+            "testPath":"/",
+            "ports":[]
+        },
+        {
+            "name":"VPN Config Web",
+            "hostname":"10.13.37.8",
+            "ports":[
+                {
+                    "port": 80
+                }
+            ]
+        }
+    ]
+}
