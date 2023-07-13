@@ -2,7 +2,7 @@ version: '2.1'
 
 services:
   docs:
-    image: ghcr.io/wombatcyberlabs/{{ repository.name }}-docs:main
+    image: ghcr.io/wombatcyberlabs/lab-content-pivotlab-docs:main
     restart: always
     hostname: docs
     ports:
@@ -21,6 +21,8 @@ services:
     networks:
       lab_net:
         ipv4_address: 10.13.37.11
+      ssrf_net:
+        ipv4_address: 10.13.38.11
   dockovpn:
     image: alekslitvinenk/openvpn:v1.9.0-regen-dh
     restart: always
@@ -48,6 +50,18 @@ services:
     ports: 
       - "8081:80"
 
+  gogs:
+    image: gogs/gogs:0.11.43
+    ports:
+      - "8091:3000"
+    hostname: gogs
+    networks:
+      lab_net:
+        ipv4_address: 10.13.37.21
+      ssrf_net:
+        ipv4_address: 10.13.38.21
+
+
 networks:
   lab_net:
     driver: bridge
@@ -55,3 +69,9 @@ networks:
       driver: default
       config:
         - subnet: 10.13.37.0/24
+  ssrf_net:
+    driver: bridge
+    ipam:
+      driver: default
+      config:
+        - subnet: 10.13.38.0/24

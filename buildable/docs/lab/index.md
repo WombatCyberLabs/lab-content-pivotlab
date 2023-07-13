@@ -1,3 +1,3 @@
 # Lab Instructions
-This is the template starter instructions. Fill in actual instructions here.
 
+## [/lab/ssrf](SSRF Pivot Challenge)
