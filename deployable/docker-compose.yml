@@ -66,7 +66,6 @@ services:
       interval: 10s
       timeout: 5s
       retries: 5
-
   gogsinit:
     image: ghcr.io/wombatcyberlabs/lab-content-pivotlab-gogsinit:main
     hostname: gogsinit
@@ -76,7 +75,13 @@ services:
     depends_on:
       gogs:
         condition: service_healthy
-
+  ssrftarget:
+    image: ghcr.io/wombatcyberlabs/lab-content-pivotlab-ssrftarget:main
+    restart: always
+    hostname: ssrftarget
+    networks:
+      ssrf_net:
+        ipv4_address: 10.13.38.23
     
 
 networks:
