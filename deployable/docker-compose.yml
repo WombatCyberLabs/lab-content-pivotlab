@@ -62,7 +62,7 @@ services:
       ssrf_net:
         ipv4_address: 10.13.38.21
     healthcheck:
-      test: "curl -f http://localhost:3000/install"
+      test: "curl -f http://localhost:3000/"
       interval: 10s
       timeout: 5s
       retries: 5
