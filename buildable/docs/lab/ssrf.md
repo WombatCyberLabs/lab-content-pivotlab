@@ -76,3 +76,38 @@ We now see a view of the repository we created. We can see several details about
 
 ## Abusing The Webhooks Vulnerability
 
+Webhooks are a feature offered by Gogs, and most other similar git services.
+> In Gogs, webhooks play a crucial role in facilitating automated workflows and integrations with external systems. Webhooks are a feature that allows Gogs to send notifications or trigger actions in other applications or services whenever specific events occur within the repository.
+
+We can create a webhook on the repository that will cause Gogs to make an HTTP POST request to the URL we provide with an event payload whenever certain events occur on the repo. We can click the "Add Webhook" button and we will be offered a dropdown list of different webhook payload formats. Different commonly used services expect different payloads in the body of the webhook. For our purposes, we are not too concerned about the payload body and will select the "Gogs" option.
+
+![Gogs webhook options](./images/gogswebhooktypes.png)
+
+Clicking this will take us to the view for adding a webhook. We can enter our target address we are trying to access, http://10.13.38.23:8080, as the payload URL. This is a private internal address, and if the application was not vulnerable, it would not accept this address as a valid webhook URL. We can leave the rest of the settings as they are and click "Add Webhook."
+
+![Gogs new webhook](./images/gogswebhooknew.png)
+
+Once the webhook has been created, it will show up in the settings for webhooks and we can click the pencil button to go in and edit it.
+
+![Gogs webhook list](./images/gogswebhooklist.png)
+
+On the webhook editing page, we can see a "Test Delivery" button. This is what makes this SSRF vulnerability so useful. Normally, when a repo event triggers a webhook request being made, we wouldn't have any way to see the response from the webhook server. It may be possible on some implementations that provide verbose logs, but in our case, that is not necessary. If we click the "Test Delivery" button, we can see the request made to the webhook URL and the response.
+
+![Gogs webhook test sent](./images/gogswebhooktestsent.png)
+
+We can click on the recent delivery and click on the response section to see the response from the internal target webserver. We can see the response headers and the response body and see that we have successfully reached the target Nginx webserver.
+
+![Gogs internal request](./images/gogsinternalrequest.png)
+
+Following the instructions from the request, we see that in order to pull the sensitive information that the internal target webserver has on it, we need to make a request with the "getflag" query parameter set. We can scroll back up and modify our webhook url to include `/?getflag=true` to the URL and click the "Update Webhook" button.
+
+![Gogs url updated](./images/gogsurlmodified.png)
+
+We can scroll back down and send another test delivery with the modified URL. Once it completes, we can look at the response and see that we were successfully able to exploit Gogs to access the internal target webserver and get the sensitive information from it.
+
+![Gogs exploit complete](./images/gogsexploitcomplete.png)
+
+
+## Conclusion
+
+We were able to access the internal target webserver by pivoting through the publicly accessible Gogs server. We were able to find version information for the Gogs server and research disclosed vulnerabilities that might affect it. From there, we were able to find a likely relevant vulnerability and confirm its presence against the instance. We were able to use this vulnerability to access the internal target webserver and leak the sensitive information it had.
