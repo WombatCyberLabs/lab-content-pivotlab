@@ -21,7 +21,7 @@ services:
     networks:
       lab_net:
         ipv4_address: 10.13.37.11
-      pivot_net:
+      ssrf_net:
         ipv4_address: 10.13.38.11
   dockovpn:
     image: alekslitvinenk/openvpn:v1.9.0-regen-dh
@@ -59,7 +59,7 @@ services:
     networks:
       lab_net:
         ipv4_address: 10.13.37.21
-      pivot_net:
+      ssrf_net:
         ipv4_address: 10.13.38.21
     healthcheck:
       test: "curl -f http://localhost:3000/"
@@ -80,7 +80,7 @@ services:
     restart: always
     hostname: ssrftarget
     networks:
-      pivot_net:
+      ssrf_net:
         ipv4_address: 10.13.38.23
   sshserver:
     image: ghcr.io/wombatcyberlabs/lab-content-pivotlab-sshserver:main
@@ -91,8 +91,15 @@ services:
     networks:
       lab_net:
         ipv4_address: 10.13.37.24
-      pivot_net:
-        ipv4_address: 10.13.38.24
+      ssh_net:
+        ipv4_address: 10.13.39.24
+  telnetserver:
+    image: ghcr.io/wombatcyberlabs/lab-content-pivotlab-opentelnet:main
+    restart: always
+    hostname: telnetserver
+    networks:
+      ssh_net:
+        ipv4_address: 10.13.39.146
     
 
 networks:
@@ -102,9 +109,15 @@ networks:
       driver: default
       config:
         - subnet: 10.13.37.0/24
-  pivot_net:
+  ssrf_net:
     driver: bridge
     ipam:
       driver: default
       config:
         - subnet: 10.13.38.0/24
+  ssh_net:
+    driver: bridge
+    ipam:
+      driver: default
+      config:
+        - subnet: 10.13.39.0/24
