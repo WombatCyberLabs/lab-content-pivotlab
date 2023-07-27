@@ -4,9 +4,7 @@ RUN apk update
 
 RUN apk add openssh-server sl
 
-COPY train.sh /train.sh
-
-RUN adduser -D --shell /train.sh training
+RUN adduser -D --shell /usr/bin/sl training
 
 RUN printf "%s\n%s" training training | passwd training
 
