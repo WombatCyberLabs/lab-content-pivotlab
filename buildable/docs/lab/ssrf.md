@@ -18,7 +18,7 @@ We are able to access the Gogs server on the first green network through the doc
 
 ## Goal And Targets
 
-We can access the Gogs server through the Docker proxy at <SelfLink port=8091 />. Our goal is to access the webserver running at port 8080 of the 10.13.38.23 host by pivoting through the Gogs server.
+We can access the Gogs server through the Docker proxy at <SelfLink port=8091 />. Our goal is to access the webserver running on port 8080 of the 10.13.38.23 host by pivoting through the Gogs server.
 
 ## What is Gogs?
 
