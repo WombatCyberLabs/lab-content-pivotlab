@@ -16,6 +16,8 @@ COPY sshd_config /etc/ssh/sshd_config
 
 COPY banner.txt /etc/ssh/banner.txt
 
+RUN echo "" > /etc/motd
+
 #Bad because fixed host keys? lab image. doesnt matter.
 RUN ssh-keygen -f /etc/ssh/ssh_host_rsa_key -N '' -t rsa
 
