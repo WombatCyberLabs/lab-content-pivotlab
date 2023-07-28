@@ -1,6 +1,6 @@
-# Lab Instructions
+## Lab Instructions
 
-This lab is composed of multiple different challenges that demonstrate some sort of network pivoting to reach the end goal of accessing resources on an internal network.
+This lab is composed of multiple independent challenges that demonstrate some sort of network pivoting to reach the end goal of accessing resources on an internal network. It is recommended to work through these challenges on a Kali Linux Virtual Machine.
 
 ## What Is Pivoting?
 
