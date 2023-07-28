@@ -60,6 +60,10 @@ We can configure the [proxychains](https://manpages.ubuntu.com/manpages/focal/ma
 
 ![SSH Set Proxy](./images/sshsetproxy.png)
 
+We additionally want to scroll back up and find the `tcp_read_time_out` and `tcp_connect_time_out` and delete the last zero at the end of them, as they are set for much slower proxies than we are using, and doing this will greatly increase the rate at which we can later port scan through the proxy.
+
+![Set Proxy Timeout](./images/sshproxychainstimeout.png)
+
 We can save the file with ^O (Control + O) and close the file with ^X (Control + X). We can now use the `proxychains` command to intercept the network requests of other commands and attempt to send them through the SOCKS proxy. To test if the remote server even permits us to do dynamic port forwarding and if the SOCKS proxy even works, we can do the same netcat version grabbing trick from before, but this time putting `proxychains` before the command. If the server is misconfigured to allow for dynamic port forwarding, we will get a response back, otherwise, we will get an error.
 
 
